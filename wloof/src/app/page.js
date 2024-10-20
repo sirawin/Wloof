@@ -3,23 +3,11 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-export default function Home() {
+export default function Home(props) {
   const [profile, setProfile] = useState({});
-
-  useEffect(() => {
-    // Define the async function inside useEffect
-    const fetchProfile = async () => {
-      const liff = (await import("@line/liff")).default;
-      await liff.ready;
-      const profile = await liff.getProfile();
-      setProfile(profile);
-      
-    };
-
-    fetchProfile();
-    console.log(profile)
-  }, []); // Empty dependency array to run effect only once
-
+  const { liff, liffError } = props;
+  console.log(liff.getVersion());
+  
   const [selectedMood, setSelectedMood] = useState(null);
 
   const moods = [
@@ -51,7 +39,7 @@ export default function Home() {
       <main className="flex flex-col items-center text-center">
         {/* Greeting */}
         <h1 className="text-4xl font-bold mb-2">
-          Hello, {profile.displayName}
+          Hello, 
         </h1>
 
         {/* Subtitle */}
