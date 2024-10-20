@@ -1,51 +1,61 @@
+// pages/index.js
+
 import Head from 'next/head';
+import { useState } from 'react';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  const [selectedMood, setSelectedMood] = useState(null);
+
+  const moods = [
+    { name: 'Happy', color: '#FFD700' },
+    { name: 'Sad', color: '#1E90FF' },
+    { name: 'Angry', color: '#FF4500' },
+    { name: 'Excited', color: '#32CD32' },
+    { name: 'Anxious', color: '#8A2BE2' },
+    // Add more moods as needed
+  ];
+
+  const handleMoodSelect = (mood) => {
+    setSelectedMood(mood);
+    // Optionally, handle the mood selection (e.g., send to backend)
+  };
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Wloof</title>
+        <title>Wloof - Mood Tracker</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Wloof!</a>
-        </h1>
+        <h1 className={styles.title}>Welcome to Wloof!</h1>
 
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
+        <p className={styles.description}>How are you feeling today?</p>
+
+        <div className={styles.moodContainer}>
+          {moods.map((mood, index) => (
+            <button
+              key={index}
+              className={`${styles.moodButton} ${
+                selectedMood?.name === mood.name ? styles.selected : ''
+              }`}
+              style={{ backgroundColor: mood.color }}
+              onClick={() => handleMoodSelect(mood)}
+            >
+              {mood.name}
+            </button>
+          ))}
+        </div>
+
+        {selectedMood && (
+          <p className={styles.selectedMood}>
+            You are feeling: <strong>{selectedMood.name}</strong>
+          </p>
+        )}
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {/* Existing grid content can remain or be removed */}
         </div>
       </main>
 

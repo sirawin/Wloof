@@ -8,7 +8,9 @@
   "dependencies": {
     "next": "latest",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-bubble-ui": "^1.1.2",
+    "react-dom": "18.2.0",
+    "react-tinder-card": "^1.6.4"
   },
   "engines": {
     "node": ">=18"
