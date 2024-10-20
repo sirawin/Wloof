@@ -1,34 +1,33 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import { useEffect, useState } from 'react'
+import Head from 'next/head'
+import Image from 'next/image'
 
-export default function Home({ liff, liffError }) {
+
+export default function Profile() {
+  const [profile, setProfile] = useState({})
+
+  useEffect(async () => {
+    const liff = (await import('@line/liff')).default
+    await liff.ready
+    const profile = await liff.getProfile()
+    setProfile(profile)
+  }, [profile.userId])
+
   return (
-    <div>
+    <section>
       <Head>
-        <title>LIFF App</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>My Profile</title>
       </Head>
-
-      <main className={styles.main}>
-        <h1>create-liff-app</h1>
-        {liff && <p>LIFF init succeeded.</p>}
-        {liffError && (
-          <>
-            <p>LIFF init failed.</p>
-            <p>
-              <code>{liffError}</code>
-            </p>
-          </>
-        )}
-        <a
-          href="https://developers.line.biz/ja/docs/liff/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          LIFF Documentation
-        </a>
-      </main>
-    </div>
-  );
+      <h1>Profile</h1>
+      <div>
+        {profile.pictureUrl && <Image
+          src={profile.pictureUrl}
+          alt={profile.displayName}
+          width={500}
+          height={500}
+        />}
+        <div>Name: {profile.displayName}</div>
+      </div>
+    </section>
+  )
 }
