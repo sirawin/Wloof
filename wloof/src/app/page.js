@@ -1,15 +1,23 @@
 "use client"; // Ensures client-side rendering
 
 import Image from "next/image";
-import { useState } from "react";
-import liff from '@line/liff';
+import { useState, useEffect } from "react";
 
-liff.init(() => {
-  const liffId = '2006477399-yokJlXXe'
-  const idToken = liff.getDecodedIDToken();
-
-});
 export default function Home() {
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    // Define the async function inside useEffect
+    const fetchProfile = async () => {
+      const liff = (await import("@line/liff")).default;
+      await liff.ready;
+      const profile = await liff.getProfile();
+      setProfile(profile);
+    };
+
+    fetchProfile();
+  }, []); // Empty dependency array to run effect only once
+
   const [selectedMood, setSelectedMood] = useState(null);
 
   const moods = [
@@ -40,7 +48,9 @@ export default function Home() {
     <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
       <main className="flex flex-col items-center text-center">
         {/* Greeting */}
-        <h1 className="text-4xl font-bold mb-2">Hello, {idToken}</h1>
+        <h1 className="text-4xl font-bold mb-2">
+          Hello, {profile.displayName}
+        </h1>
 
         {/* Subtitle */}
         <p className="text-xl mb-6">How are you feeling today?</p>
