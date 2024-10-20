@@ -8,12 +8,23 @@ export default function Home() {
   const [selectedMood, setSelectedMood] = useState(null);
 
   const moods = [
-    { name: 'Happy', color: '#FFD700' },
-    { name: 'Sad', color: '#1E90FF' },
-    { name: 'Angry', color: '#FF4500' },
-    { name: 'Excited', color: '#32CD32' },
-    { name: 'Anxious', color: '#8A2BE2' },
-    // Add more moods as needed
+    { emoji: '😀', label: 'Happy' },
+    { emoji: '😭', label: 'Sad' },
+    { emoji: '😡', label: 'Angry' },
+    { emoji: '🤗', label: 'Excited' },
+    { emoji: '😱', label: 'Shocked' },
+    { emoji: '😞', label: 'Disappointed' },
+    { emoji: '🥳', label: 'Celebrating' },
+    { emoji: '🤒', label: 'Sick' },
+    { emoji: '🥺', label: 'Pleading' },
+    { emoji: '😵', label: 'Dizzy' },
+    { emoji: '🤬', label: 'Furious' },
+    { emoji: '😓', label: 'Sweaty' },
+    { emoji: '😨', label: 'Scared' },
+    { emoji: '🥴', label: 'Woozy' },
+    { emoji: '🤯', label: 'Mind-blown' },
+    { emoji: '🤢', label: 'Nauseous' },
+    { emoji: '😤', label: 'Frustrated' },
   ];
 
   const handleMoodSelect = (mood) => {
@@ -24,118 +35,34 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Wloof - Mood Tracker</title>
+        <title>Mood Tracker</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1 className={styles.title}>Welcome to Wloof!</h1>
-
+        <h1 className={styles.title}>Hello, Tong</h1>
         <p className={styles.description}>How are you feeling today?</p>
 
-        <div className={styles.moodContainer}>
+        <div className={styles.moodGrid}>
           {moods.map((mood, index) => (
             <button
               key={index}
               className={`${styles.moodButton} ${
-                selectedMood?.name === mood.name ? styles.selected : ''
+                selectedMood?.emoji === mood.emoji ? styles.selected : ''
               }`}
-              style={{ backgroundColor: mood.color }}
               onClick={() => handleMoodSelect(mood)}
             >
-              {mood.name}
+              {mood.emoji}
             </button>
           ))}
         </div>
 
         {selectedMood && (
           <p className={styles.selectedMood}>
-            You are feeling: <strong>{selectedMood.name}</strong>
+            You selected: <strong>{selectedMood.label}</strong>
           </p>
         )}
-
-        <div className={styles.grid}>
-          {/* Existing grid content can remain or be removed */}
-        </div>
       </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family:
-            Menlo,
-            Monaco,
-            Lucida Console,
-            Liberation Mono,
-            DejaVu Sans Mono,
-            Bitstream Vera Sans Mono,
-            Courier New,
-            monospace;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family:
-            -apple-system,
-            BlinkMacSystemFont,
-            Segoe UI,
-            Roboto,
-            Oxygen,
-            Ubuntu,
-            Cantarell,
-            Fira Sans,
-            Droid Sans,
-            Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
     </div>
   );
 }
