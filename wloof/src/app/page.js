@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 export default function Home(props) {
   const [profile, setProfile] = useState({});
   const { liff, liffError } = props;
-  console.log(liff.getVersion());
+  //console.log(liff.getVersion());
   
   const [selectedMood, setSelectedMood] = useState(null);
 
