@@ -2,7 +2,11 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import liff from '@line/liff';
 
+liff.init({
+    liffId: '2006477399-yokJlXXe', // Use own liffId
+});
 export default function Home() {
   const [selectedMood, setSelectedMood] = useState(null);
 
