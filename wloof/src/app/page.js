@@ -4,8 +4,10 @@ import Image from "next/image";
 import { useState } from "react";
 import liff from '@line/liff';
 
-liff.init({
-    liffId: '2006477399-yokJlXXe', // Use own liffId
+liff.init(() => {
+  const liffId = '2006477399-yokJlXXe'
+  const idToken = liff.getDecodedIDToken();
+
 });
 export default function Home() {
   const [selectedMood, setSelectedMood] = useState(null);
@@ -38,7 +40,7 @@ export default function Home() {
     <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
       <main className="flex flex-col items-center text-center">
         {/* Greeting */}
-        <h1 className="text-4xl font-bold mb-2">Hello, Tong</h1>
+        <h1 className="text-4xl font-bold mb-2">Hello, {idToken}</h1>
 
         {/* Subtitle */}
         <p className="text-xl mb-6">How are you feeling today?</p>
