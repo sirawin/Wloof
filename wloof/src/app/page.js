@@ -13,9 +13,11 @@ export default function Home() {
       await liff.ready;
       const profile = await liff.getProfile();
       setProfile(profile);
+      
     };
 
     fetchProfile();
+    console.log(profile)
   }, []); // Empty dependency array to run effect only once
 
   const [selectedMood, setSelectedMood] = useState(null);
