@@ -11,7 +11,7 @@ export default function Home({ liff, liffError, profile }) {
       </Head>
 
       <main className={styles.main}>
-        <h1>Hi, {profile.displayName}</h1>
+        <h1>Hi, {profile}</h1>
         {liff && <p>LIFF init succeeded.</p>}
         {liffError && (
           <>
