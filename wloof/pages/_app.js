@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
       try {
       await liff.init({ liffId });
       setLiffObject(liff);
-      const system = await liff.getOs();
+      const system = await liff.getOS();
       setOs(system);
       } catch (error) {
       console.error('liff init error', error.message);
