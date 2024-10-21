@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
       setLiffError(error.message)
       }
       if (!liff.isLoggedIn()) {
-      liff.login();
+      //liff.login();
       }
       };
       initLiff();
