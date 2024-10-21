@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-export default function Home({ liff, liffError, os }) {
+export default function Home({ liff, liffError, profile }) {
   return (
     <div>
       <Head>
@@ -11,9 +11,8 @@ export default function Home({ liff, liffError, os }) {
       </Head>
 
       <main className={styles.main}>
-        <h1>create-liff-app</h1>
+        <h1>Hi, {profile.displayName}</h1>
         {liff && <p>LIFF init succeeded.</p>}
-        {os}
         {liffError && (
           <>
             <p>LIFF init failed.</p>
