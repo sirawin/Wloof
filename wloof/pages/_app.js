@@ -1,33 +1,22 @@
-import "../styles/globals.css";
-import { useState, useEffect } from "react";
+import { useEffect } from 'react';
+import '../styles/globals.css'
+
+const liffId = process.env.NEXT_PUBLIC_LIFF_ID
 
 function MyApp({ Component, pageProps }) {
-  const [liffObject, setLiffObject] = useState(null);
-  const [liffError, setLiffError] = useState(null);
+  useEffect(async () => {
+    const liff = (await import('@line/liff')).default
+    try {
+      await liff.init({ liffId });
+    } catch (error) {
+      console.error('liff init error', error.message)
+    }
+    if (!liff.isLoggedIn()) {
+      liff.login();
+    }
+  })
 
-  // Execute liff.init() when the app is initialized
-  useEffect(() => {
-    // to avoid `window is not defined` error
-    import("@line/liff").then((liff) => {
-      console.log("LIFF init...");
-      liff
-        .init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID })
-        .then(() => {
-          console.log("LIFF init succeeded.");
-          setLiffObject(liff);
-        })
-        .catch((error) => {
-          console.log("LIFF init failed.");
-          setLiffError(error.toString());
-        });
-    });
-  }, []);
-
-  // Provide `liff` object and `liffError` object
-  // to page component as property
-  pageProps.liff = liffObject;
-  pageProps.liffError = liffError;
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 
-export default MyApp;
+export default MyApp
