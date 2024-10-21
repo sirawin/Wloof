@@ -5,16 +5,19 @@ const liffId = process.env.NEXT_PUBLIC_LIFF_ID
 
 function MyApp({ Component, pageProps }) {
   useEffect(async () => {
-    const liff = (await import('@line/liff')).default
-    try {
+    const initLiff = async () => {
+      const liff = (await import('@line/liff')).default;
+      try {
       await liff.init({ liffId });
-    } catch (error) {
-      console.error('liff init error', error.message)
-    }
-    if (!liff.isLoggedIn()) {
+      } catch (error) {
+      console.error('liff init error', error.message);
+      }
+      if (!liff.isLoggedIn()) {
       liff.login();
-    }
-  })
+      }
+      };
+      initLiff();
+  }, [])
 
   return <Component {...pageProps} />
 }
