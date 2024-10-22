@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button"; // Adjust the import path
 import { cn } from "@/lib/utils"; // Utility function for conditional classes
 import { database } from '../lib/firebaseConfig'; // Adjust the path based on where you placed firebase.js
 import { ref, push, set, serverTimestamp } from "firebase/database";
+import { useParams } from 'next/navigation'
 
 export default function Home({ liff, liffError, profile, uid }) {
   const [selectedMood, setSelectedMood] = useState(null);
-
+  const params = useParams()
   const moods = [
     { emoji: "🤢", label: "Nauseous" },
     { emoji: "😐", label: "Meh" },
@@ -80,7 +81,7 @@ export default function Home({ liff, liffError, profile, uid }) {
 
         {/* Subtitle */}
         <p className="text-xl">How are you feeling today?</p>
-
+        {params}
         {/* Mood Grid */}
         <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
           {moods.map((mood, index) => (
