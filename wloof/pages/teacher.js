@@ -19,6 +19,19 @@ import {
 
 const close = async () => {
     const liff = (await import('@line/liff')).default;
+    liff
+  .sendMessages([
+    {
+      type: "text",
+      text: "Hello, World!",
+    },
+  ])
+  .then(() => {
+    console.log("message sent");
+  })
+  .catch((err) => {
+    console.log("error", err);
+  });
     if (!liff.isInClient()) {
         window.alert('This button is unavailable as LIFF is currently being opened in an external browser.');
     } else {
