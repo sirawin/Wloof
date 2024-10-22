@@ -17,44 +17,36 @@ export default function Home({ liff, liffError, profile, uid }) {
   const [success, setSuccess] = useState(false); // Optional: For handling success messages
 
   useEffect(() => {
+    
     if (!router.isReady) return; // Wait until router is ready
   
-    const checkMoodEntry = async () => {
-      const { slug } = router.query;
+    const { slug } = router.query;
   
-      if (uid && slug) {
-        setSlug(slug);
+    if (uid && slug) {
+      setSlug(slug);
   
-        try {
-          // Dynamically import LIFF
-          const liff = (await import('@line/liff')).default;
-          // Await LIFF to be ready
-          await liff.ready;
+      // Create the composite key
+      const uidSessionID = `${uid}_${slug}`;
   
-          // Proceed with checking the mood entry
-          const uidSessionID = `${uid}_${slug}`;
+      // Reference to the specific mood entry
+      const moodRef = ref(database, `moods/${uidSessionID}`);
   
-          // Reference to the specific mood entry
-          const moodRef = ref(database, `moods/${uidSessionID}`);
-  
-          // Check if the mood entry exists
-          const snapshot = await get(moodRef);
-  
+      // Check if the mood entry exists
+      get(moodRef)
+        .then((snapshot) => {
           if (snapshot.exists()) {
             // Mood already recorded, redirect to results page
             router.replace(`/relationship`);
           }
           // Else, do nothing and allow mood selection
-        } catch (err) {
-          console.error("Error during LIFF initialization or database query:", err);
-          setError("An error occurred while initializing the application. Please try again.");
-        }
-      } else {
-        setError(`Invalid or missing UUID or slug. Slug: ${slug}, UID: ${uid}`);
-      }
-    };
-  
-    checkMoodEntry();
+        })
+        .catch((err) => {
+          console.error("Error querying Realtime Database:", err);
+          setError("An error occurred while checking your mood. Please try again.");
+        });
+    } else {
+      setError("Invalid or missing UUID or slug."+slug+uid);
+    }
   }, [router.isReady, router.query, uid]);
 
   const moods = [
