@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"; // Adjust the import path
 import { cn } from "@/lib/utils"; // Utility function for conditional classes
 import { database } from '../lib/firebaseConfig'; // Adjust the path based on where you placed firebase.js
-import { ref, push, set, serverTimestamp } from "firebase/database";
+import { ref, push, set, serverTimestamp, get } from "firebase/database";
 import { useRouter } from 'next/router'
 
 export default function Home({ liff, liffError, profile, uid }) {
