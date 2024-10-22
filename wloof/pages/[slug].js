@@ -36,7 +36,7 @@ export default function Home({ liff, liffError, profile, uid }) {
         .then((snapshot) => {
           if (snapshot.exists()) {
             // Mood already recorded, redirect to results page
-            router.replace(`/relationship`);
+            router.replace(`/result/`+slug);
           }
           // Else, do nothing and allow mood selection
         })
