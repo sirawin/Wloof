@@ -4,6 +4,8 @@ import Head from "next/head";
 import { useState } from "react";
 import { Button } from "@/components/ui/button"; // Adjust the import path
 import { cn } from "@/lib/utils"; // Utility function for conditional classes
+import { database } from "@/lib/firebase"; // Adjust the path based on where you placed firebase.js
+import { ref, push, set, serverTimestamp } from "firebase/database";
 
 export default function Home({ liff, liffError, profile }) {
   const [selectedMood, setSelectedMood] = useState(null);
@@ -28,8 +30,30 @@ export default function Home({ liff, liffError, profile }) {
     { emoji: "😶‍🌫️", label: "Speechless" },
   ];
 
-  const handleMoodSelect = (mood) => {
+  const handleMoodSelect = async (mood) => {
     setSelectedMood(mood);
+  
+    try {
+      // Reference to the 'moods' collection in Realtime Database
+      const moodsRef = ref(database, "moods");
+  
+      // Create a new unique key under 'moods'
+      const newMoodRef = push(moodsRef);
+  
+      // Set data for the new mood entry
+      await set(newMoodRef, {
+        user: profile || "Guest",
+        mood: mood.label,
+        emoji: mood.emoji,
+        timestamp: serverTimestamp(), // Adds server timestamp
+      });
+  
+      // Optional: Provide feedback to the user, e.g., show a success message or reset the selected mood
+    } catch (err) {
+      console.error("Error writing to Realtime Database: ", err);
+    } finally {
+
+    }
   };
 
   return (
