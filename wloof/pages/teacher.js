@@ -22,9 +22,21 @@ const close = async () => {
     liff
   .sendMessages([
     {
-      type: "text",
-      text: "Hello, World!",
-    },
+        "type": "template",
+        "altText": "this is a buttons template",
+        "template": {
+          "type": "buttons",
+          "title": "Mood check",
+          "text": "click",
+          "actions": [
+            {
+              "type": "message",
+              "label": "click",
+              "text": "click"
+            }
+          ]
+        }
+      },
   ])
   .then(() => {
     console.log("message sent");
@@ -32,6 +44,7 @@ const close = async () => {
   .catch((err) => {
     console.log("error", err);
   });
+
     if (!liff.isInClient()) {
         window.alert('This button is unavailable as LIFF is currently being opened in an external browser.');
     } else {
