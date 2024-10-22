@@ -5,7 +5,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { database } from '../../lib/firebase'; // Adjust the path if necessary
+import { database } from '../../lib/firebaseConfig'; // Adjust the path if necessary
 import { ref, query, orderByChild, equalTo, get } from "firebase/database";
 import { Button } from "@/components/ui/button"; // Adjust the import path as needed
 
