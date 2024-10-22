@@ -54,7 +54,7 @@ export default function ResultPage() {
         }
       } catch (err) {
         console.error("Error fetching mood data:", err);
-        setError("An error occurred while fetching mood data. Please try again.");
+        setError("An error occurred while fetching mood data. Please try again."+err);
       } finally {
         setLoading(false);
       }
