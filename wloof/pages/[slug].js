@@ -46,7 +46,7 @@ export default function Home({ liff, liffError, profile, uid }) {
     } else {
       setError("Invalid or missing UUID or slug."+slug+uid);
     }
-  }, [router.isReady, router.query]);
+  }, [router.isReady, router.query, uid]);
 
   const moods = [
     { emoji: "🤢", label: "Nauseous" },
