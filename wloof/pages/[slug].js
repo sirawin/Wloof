@@ -18,12 +18,33 @@ export default function Home({ liff, liffError, profile, uid }) {
 
   useEffect(() => {
     if (!router.isReady) return; // Wait until router is ready
-    const { slug } = router.query; // 'slug' is from the dynamic route [slug].js
-
-    if (slug) {
+  
+    const { slug } = router.query;
+  
+    if (uid && slug) {
       setSlug(slug);
+  
+      // Create the composite key
+      const uidSessionID = `${uid}_${slug}`;
+  
+      // Reference to the specific mood entry
+      const moodRef = ref(database, `moods/${uidSessionID}`);
+  
+      // Check if the mood entry exists
+      get(moodRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            // Mood already recorded, redirect to results page
+            router.replace(`/relationship`);
+          }
+          // Else, do nothing and allow mood selection
+        })
+        .catch((err) => {
+          console.error("Error querying Realtime Database:", err);
+          setError("An error occurred while checking your mood. Please try again.");
+        });
     } else {
-      setError("Invalid or missing slug.");
+      setError("Invalid or missing UUID or slug.");
     }
   }, [router.isReady, router.query]);
 
@@ -48,28 +69,33 @@ export default function Home({ liff, liffError, profile, uid }) {
   ];
 
   const handleMoodSelect = async (mood) => {
-
+    if (!uid || !slug) {
+      console.error("UUID or slug is missing.");
+      setError("An error occurred. Please try again.");
+      return;
+    }
+  
     setSelectedMood(mood);
     setLoading(true);
     setError(null);
     setSuccess(false);
-
+  
+    // Create the composite key
+    const uidSessionID = `${uid}_${slug}`;
+  
     try {
-      // Reference to the 'moods' collection in Realtime Database
-      const moodsRef = ref(database, "moods");
-
-      // Create a new unique key under 'moods'
-      const newMoodRef = push(moodsRef);
-
-      // Set data for the new mood entry
-      await set(newMoodRef, {
+      // Reference to the specific path using composite key
+      const moodRef = ref(database, `moods/${uidSessionID}`);
+  
+      // Set data for the mood entry (overwrites if exists)
+      await set(moodRef, {
         user: profile || "Guest",
-        userID: uid, // Store the UUID
+        uid: uid, // Store the UUID
         sessionID: slug, // Store the slug (text)
         mood: mood.label,
         timestamp: serverTimestamp(), // Adds server timestamp
       });
-
+  
       // Provide feedback to the user
       setSuccess(true);
       setSelectedMood(null); // Optionally reset the selected mood
