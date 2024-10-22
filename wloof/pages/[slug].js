@@ -44,7 +44,7 @@ export default function Home({ liff, liffError, profile, uid }) {
           setError("An error occurred while checking your mood. Please try again.");
         });
     } else {
-      setError("Invalid or missing UUID or slug.");
+      setError("Invalid or missing UUID or slug."+slug+uid);
     }
   }, [router.isReady, router.query]);
 
