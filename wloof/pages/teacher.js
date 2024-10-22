@@ -17,6 +17,15 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
+const close = async () => {
+    const liff = (await import('@line/liff')).default;
+    if (!liff.isInClient()) {
+        window.alert('This button is unavailable as LIFF is currently being opened in an external browser.');
+    } else {
+        liff.closeWindow();
+    }
+}
+
 const items = [
   {
     id: "mood_check",
@@ -56,6 +65,7 @@ export default function CheckboxReactHookFormMultiple() {
       ),
     })
     form.reset()
+    close()
   }
 
   return (

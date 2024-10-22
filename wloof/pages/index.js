@@ -1,7 +1,9 @@
-"use client"; // Ensures client-side rendering
+"use client";
 
 import Head from "next/head";
 import { useState } from "react";
+import { Button } from "@/components/ui/button"; // Adjust the import path
+import { cn } from "@/lib/utils"; // Utility function for conditional classes
 
 export default function Home({ liff, liffError, profile }) {
   const [selectedMood, setSelectedMood] = useState(null);
@@ -31,51 +33,53 @@ export default function Home({ liff, liffError, profile }) {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center text-foreground">
       <Head>
         <title>LIFF App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center text-center">
+      <main className="flex flex-col items-center text-center space-y-6">
         {/* Greeting */}
-        <h1 className="text-4xl font-bold mb-2">Hi, {profile || "Guest"}</h1>
+        <h1 className="text-4xl font-bold">Hi, {profile || "Guest"}</h1>
 
         {/* LIFF status */}
+        {liff.isInClient()}
         {liff && <p>LIFF init succeeded.</p>}
         {liffError && (
-          <>
+          <div>
             <p>LIFF init failed.</p>
             <p>
               <code>{liffError}</code>
             </p>
-          </>
+          </div>
         )}
 
         {/* Subtitle */}
-        <p className="text-xl mb-6">How are you feeling today?</p>
+        <p className="text-xl">How are you feeling today?</p>
 
         {/* Mood Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 max-w-md mx-auto">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
           {moods.map((mood, index) => (
-            <button
+            <Button
               key={index}
-              className={`text-4xl hover:scale-110 transform transition-all ${
-                selectedMood?.emoji === mood.emoji
-                  ? "ring-4 ring-white rounded-full"
-                  : ""
-              }`}
+              variant={selectedMood?.emoji === mood.emoji ? "default" : "ghost"}
+              size="icon"
               onClick={() => handleMoodSelect(mood)}
+              className={cn(
+                "text-4xl",
+                selectedMood?.emoji === mood.emoji && "ring-2 ring-ring"
+              )}
             >
               {mood.emoji}
-            </button>
+            </Button>
           ))}
         </div>
 
         {/* Selected Mood */}
         {selectedMood && (
-          <p className="mt-6 text-xl">
+          <p className="mt-4 text-xl">
             You selected: <strong>{selectedMood.label}</strong>
           </p>
         )}
@@ -85,7 +89,7 @@ export default function Home({ liff, liffError, profile }) {
           href="https://developers.line.biz/ja/docs/liff/"
           target="_blank"
           rel="noreferrer"
-          className="mt-4 text-blue-500 underline"
+          className="mt-4 text-primary underline"
         >
           LIFF Documentation
         </a>
