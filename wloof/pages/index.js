@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"; // Utility function for conditional classes
 import { database } from '../lib/firebaseConfig'; // Adjust the path based on where you placed firebase.js
 import { ref, push, set, serverTimestamp } from "firebase/database";
 
-export default function Home({ liff, liffError, profile }) {
+export default function Home({ liff, liffError, profile, uid }) {
   const [selectedMood, setSelectedMood] = useState(null);
 
   const moods = [
@@ -43,8 +43,8 @@ export default function Home({ liff, liffError, profile }) {
       // Set data for the new mood entry
       await set(newMoodRef, {
         user: profile || "Guest",
+        uid: uid,
         mood: mood.label,
-        emoji: mood.emoji,
         timestamp: serverTimestamp(), // Adds server timestamp
       });
   
