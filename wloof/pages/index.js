@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { Button } from "@/components/ui/button"; // Adjust the import path
 import { cn } from "@/lib/utils"; // Utility function for conditional classes
-import { database } from './firebaseConfig'; // Adjust the path based on where you placed firebase.js
+import { database } from '../lib/firebaseConfig'; // Adjust the path based on where you placed firebase.js
 import { ref, push, set, serverTimestamp } from "firebase/database";
 
 export default function Home({ liff, liffError, profile }) {
