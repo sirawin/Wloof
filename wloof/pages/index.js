@@ -81,7 +81,7 @@ export default function Home({ liff, liffError, profile, uid }) {
 
         {/* Subtitle */}
         <p className="text-xl">How are you feeling today?</p>
-        {params}
+
         {/* Mood Grid */}
         <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
           {moods.map((mood, index) => (
