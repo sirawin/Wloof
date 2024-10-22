@@ -30,13 +30,13 @@ const close = async () => {
           "text": "click",
           "actions": [
             {
-              "type": "message",
+              "type": "uri",
               "label": "click",
-              "text": "click"
+              "uri": "https://liff.line.me/2006477887-2orv54av"
             }
           ]
         }
-      },
+      }
   ])
   .then(() => {
     console.log("message sent");
