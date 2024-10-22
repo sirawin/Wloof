@@ -122,6 +122,7 @@ export default function Home({ liff, liffError, profile, uid }) {
         {slug && <p className="text-xl">Text: {slug}</p>}
 
         {/* LIFF status */}
+        {uid}
         {liff && <p>LIFF init succeeded.</p>}
         {liffError && (
           <div>
