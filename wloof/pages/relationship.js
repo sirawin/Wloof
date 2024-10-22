@@ -2,95 +2,60 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Head from "next/head";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/router";
+import { Button } from "@/components/ui/button";
+
+// Mock-up data representing 36 friends
+const friendsList = [
+  { id: 1, name: "Alice Johnson", color: "bg-red-500" },
+  { id: 2, name: "Bob Smith", color: "bg-green-500" },
+  { id: 3, name: "Charlie Williams", color: "bg-blue-500" },
+  { id: 4, name: "Diana Prince", color: "bg-yellow-500" },
+  { id: 5, name: "Ethan Hunt", color: "bg-purple-500" },
+  { id: 6, name: "Fiona Gallagher", color: "bg-pink-500" },
+  { id: 7, name: "George Miller", color: "bg-indigo-500" },
+  { id: 8, name: "Hannah Baker", color: "bg-teal-500" },
+  { id: 9, name: "Ian Somerhalder", color: "bg-orange-500" },
+  { id: 10, name: "Jessica Jones", color: "bg-lime-500" },
+  { id: 11, name: "Kevin Hart", color: "bg-cyan-500" },
+  { id: 12, name: "Laura Palmer", color: "bg-amber-500" },
+  { id: 13, name: "Michael Scott", color: "bg-emerald-500" },
+  { id: 14, name: "Natalie Portman", color: "bg-fuchsia-500" },
+  { id: 15, name: "Oscar Wilde", color: "bg-rose-500" },
+  { id: 16, name: "Penelope Cruz", color: "bg-sky-500" },
+  { id: 17, name: "Quentin Tarantino", color: "bg-violet-500" },
+  { id: 18, name: "Rachel Green", color: "bg-gray-500" },
+  { id: 19, name: "Steve Rogers", color: "bg-red-700" },
+  { id: 20, name: "Tina Fey", color: "bg-green-700" },
+  { id: 21, name: "Uma Thurman", color: "bg-blue-700" },
+  { id: 22, name: "Victor Hugo", color: "bg-yellow-700" },
+  { id: 23, name: "Wanda Maximoff", color: "bg-purple-700" },
+  { id: 24, name: "Xander Cage", color: "bg-pink-700" },
+  { id: 25, name: "Yvonne Strahovski", color: "bg-indigo-700" },
+  { id: 26, name: "Zachary Levi", color: "bg-teal-700" },
+  { id: 27, name: "Andrew Garfield", color: "bg-orange-700" },
+  { id: 28, name: "Bruce Wayne", color: "bg-lime-700" },
+  { id: 29, name: "Clark Kent", color: "bg-cyan-700" },
+  { id: 30, name: "Diana Ross", color: "bg-amber-700" },
+  { id: 31, name: "Elliot Alderson", color: "bg-emerald-700" },
+  { id: 32, name: "Frodo Baggins", color: "bg-fuchsia-700" },
+  { id: 33, name: "Gandalf Grey", color: "bg-rose-700" },
+  { id: 34, name: "Hermione Granger", color: "bg-sky-700" },
+  { id: 35, name: "Indiana Jones", color: "bg-violet-700" },
+  { id: 36, name: "James Bond", color: "bg-gray-700" },
+];
 
 export default function Relationship() {
-  const [profiles, setProfiles] = useState([]);
   const [selectedFriends, setSelectedFriends] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
-  const { roomId } = router.query; // Assuming roomId is passed as a query parameter
 
-  const mockFriendsList = [
-    { id: 1, name: "Alice Johnson", color: "bg-red-500" },
-    { id: 2, name: "Bob Smith", color: "bg-green-500" },
-    { id: 3, name: "Charlie Williams", color: "bg-blue-500" },
-    { id: 4, name: "Diana Prince", color: "bg-yellow-500" },
-    { id: 5, name: "Ethan Hunt", color: "bg-purple-500" },
-    // Add more mock friends as needed
-  ];
-
-  useEffect(() => {
-    if (!roomId) {
-      // If no roomId is available, use mock-up data
-      setProfiles(
-        mockFriendsList.map((friend) => ({
-          userId: friend.id.toString(),
-          displayName: friend.name,
-          color: friend.color,
-        }))
-      );
-      setLoading(false);
-      return;
-    }
-
-    const fetchData = async () => {
-      try {
-        // Fetch member IDs
-        const resMembers = await fetch(`/api/getGroupMembers?roomId=${roomId}`);
-        const dataMembers = await resMembers.json();
-
-        if (dataMembers.error) {
-          throw new Error(dataMembers.error);
-        }
-
-        const { memberIds } = dataMembers;
-
-        // Fetch member profiles
-        const resProfiles = await fetch("/api/getMemberProfiles", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ roomId, userIds: memberIds }),
-        });
-
-        const dataProfiles = await resProfiles.json();
-
-        if (dataProfiles.error) {
-          throw new Error(dataProfiles.error);
-        }
-
-        setProfiles(dataProfiles.profiles);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        // Use mock-up data as fallback
-        setProfiles(
-          mockFriendsList.map((friend) => ({
-            userId: friend.id.toString(),
-            displayName: friend.name,
-            color: friend.color,
-          }))
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [roomId]);
-
-  const handleSelectFriend = (userId) => {
+  const handleSelectFriend = (friendId) => {
     setSelectedFriends((prevSelected) => {
-      if (prevSelected.includes(userId)) {
-        return prevSelected.filter((id) => id !== userId);
+      if (prevSelected.includes(friendId)) {
+        return prevSelected.filter((id) => id !== friendId);
       } else {
-        return [...prevSelected, userId];
+        return [...prevSelected, friendId];
       }
     });
   };
@@ -101,13 +66,10 @@ export default function Relationship() {
     // You can send this data to your backend or process it as needed
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
-  }
+  // Function to get the first name
+  const getFirstName = (fullName) => {
+    return fullName.split(" ")[0];
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center py-8">
@@ -116,51 +78,55 @@ export default function Relationship() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <main className="w-full max-w-2xl px-4">
+      <main className="w-full max-w-4xl px-4">
         <h1 className="text-3xl font-bold mb-6 text-center">
           Select Your Close Friends
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {profiles.map((profile) => (
+        <div className="grid grid-cols-6 sm:grid-cols-8 gap-4">
+          {friendsList.map((friend) => (
             <div
-              key={profile.userId}
-              className={cn(
-                "flex items-center p-4 border rounded-md cursor-pointer",
-                selectedFriends.includes(profile.userId)
-                  ? "border-primary bg-primary/10"
-                  : "border-border"
-              )}
-              onClick={() => handleSelectFriend(profile.userId)}
+              key={friend.id}
+              className="flex flex-col items-center cursor-pointer"
+              onClick={() => handleSelectFriend(friend.id)}
             >
-              <Checkbox
-                checked={selectedFriends.includes(profile.userId)}
-                onCheckedChange={() => handleSelectFriend(profile.userId)}
-                id={`friend-${profile.userId}`}
-                className="mr-4"
-              />
-              <label
-                htmlFor={`friend-${profile.userId}`}
-                className="flex items-center cursor-pointer w-full"
-              >
-                {profile.pictureUrl ? (
-                  <img
-                    src={profile.pictureUrl}
-                    alt={profile.displayName}
-                    width={50}
-                    height={50}
-                    className="rounded-full mr-4"
-                  />
-                ) : (
-                  <div
-                    className={cn(
-                      "w-12 h-12 rounded-full mr-4",
-                      profile.color || "bg-gray-300"
-                    )}
-                  />
+              <div
+                className={cn(
+                  "relative",
+                  selectedFriends.includes(friend.id)
+                    ? "ring-4 ring-primary rounded-full"
+                    : ""
                 )}
-                <span className="text-lg font-medium">{profile.displayName}</span>
-              </label>
+              >
+                <div
+                  className={cn(
+                    "w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white font-bold",
+                    friend.color
+                  )}
+                >
+                  {/* Display initials or icons if needed */}
+                </div>
+                {selectedFriends.includes(friend.id) && (
+                  <div className="absolute bottom-0 right-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-primary"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 5.707 8.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l7-7a1 1 0 000-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              {/* First name label */}
+              <span className="mt-1 text-xs text-center">
+                {getFirstName(friend.name)}
+              </span>
             </div>
           ))}
         </div>
