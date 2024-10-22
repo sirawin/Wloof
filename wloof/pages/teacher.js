@@ -33,7 +33,7 @@ const close = async (uuid) => {
           "template": {
             "type": "buttons",
             "title": "Mood Check",
-            "text": "Click the button below to share your mood.",
+            "text": uuid,
             "actions": [
               {
                 "type": "uri",
