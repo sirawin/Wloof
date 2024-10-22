@@ -10,7 +10,7 @@ import { useParams } from 'next/navigation'
 
 export default function Home({ liff, liffError, profile, uid }) {
   const [selectedMood, setSelectedMood] = useState(null);
-  const params = useParams()
+  //const params = useParams()
   const moods = [
     { emoji: "🤢", label: "Nauseous" },
     { emoji: "😐", label: "Meh" },
