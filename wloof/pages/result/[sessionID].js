@@ -82,7 +82,7 @@ export default function ResultPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center text-foreground p-4">
       <Head>
-        <title>Mood Results for {sessionID}</title>
+        <title>Mood Results</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
