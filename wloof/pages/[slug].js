@@ -8,10 +8,9 @@ import { database } from '../lib/firebaseConfig'; // Adjust the path based on wh
 import { ref, push, set, serverTimestamp } from "firebase/database";
 import { useRouter } from 'next/router'
 
-export default function Home({ liff, liffError, profile }) {
+export default function Home({ liff, liffError, profile, uid }) {
   const [selectedMood, setSelectedMood] = useState(null);
   const router = useRouter();
-  const [uid, setUid] = useState(null); // State to store UUID
   const [slug, setSlug] = useState(null); // State to store slug (text)
   const [loading, setLoading] = useState(false); // Optional: For handling loading states
   const [error, setError] = useState(null); // Optional: For handling errors
@@ -65,8 +64,8 @@ export default function Home({ liff, liffError, profile }) {
       // Set data for the new mood entry
       await set(newMoodRef, {
         user: profile || "Guest",
-        uid: uid, // Store the UUID
-        userID: slug, // Store the slug (text)
+        userID: uid, // Store the UUID
+        sessionID: slug, // Store the slug (text)
         mood: mood.label,
         timestamp: serverTimestamp(), // Adds server timestamp
       });
