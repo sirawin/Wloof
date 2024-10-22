@@ -7,6 +7,7 @@ import { z } from "zod"
 import { toast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import { v4 as uuidv4 } from 'uuid';
 import {
   Form,
   FormControl,
@@ -17,38 +18,44 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
-const close = async () => {
+const close = async (uuid) => {
     const liff = (await import('@line/liff')).default;
-    liff
-  .sendMessages([
-    {
-        "type": "template",
-        "altText": "this is a buttons template",
-        "template": {
-          "type": "buttons",
-          "title": "Mood check",
-          "text": "click",
-          "actions": [
-            {
-              "type": "uri",
-              "label": "click",
-              "uri": "https://liff.line.me/2006477887-2orv54av"
-            }
-          ]
-        }
-      }
-  ])
-  .then(() => {
-    console.log("message sent");
-  })
-  .catch((err) => {
-    console.log("error", err);
-  });
 
+    // Construct the URI with the UUID as a query parameter
+    const uriWithUuid = `https://liff.line.me/2006477887-2orv54av?uuid=${uuid}`;
+
+    // Send the message with the updated URI
+    liff
+      .sendMessages([
+        {
+          "type": "template",
+          "altText": "This is a buttons template",
+          "template": {
+            "type": "buttons",
+            "title": "Mood Check",
+            "text": "Click the button below to share your mood.",
+            "actions": [
+              {
+                "type": "uri",
+                "label": "Click Here",
+                "uri": uriWithUuid // Use the URI with UUID
+              }
+            ]
+          }
+        }
+      ])
+      .then(() => {
+        console.log("Message sent successfully.");
+      })
+      .catch((err) => {
+        console.error("Error sending message:", err);
+      });
+
+    // Check if the LIFF app is running inside the LINE client
     if (!liff.isInClient()) {
         window.alert('This button is unavailable as LIFF is currently being opened in an external browser.');
     } else {
-        liff.closeWindow();
+        liff.closeWindow(); // Close the LIFF window if inside the LINE client
     }
 }
 
@@ -82,6 +89,12 @@ export default function CheckboxReactHookFormMultiple() {
   })
 
   function onSubmit(data) {
+    const uuid = uuidv4(); // Generate a unique UUID
+
+    // (Optional) Store the UUID with the form data in Firebase Realtime Database
+    // This ensures you can reference the submission using the UUID
+    // Refer to section 4 for detailed implementation
+
     toast({
       title: "You submitted the following values:",
       description: (
@@ -90,9 +103,9 @@ export default function CheckboxReactHookFormMultiple() {
         </pre>
       ),
     })
-    form.reset()
-    close()
-  }
+    form.reset() // Reset the form fields
+    close(uuid) // Pass the generated UUID to the close function
+}
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
