@@ -113,12 +113,12 @@ export default function ResultPage() {
           <p>No mood entries found for this session.</p>
         )}
 
-        {/* Back Button */}
+        {/* Back Button 
         <Button
           onClick={() => router.push(`/${sessionID}?uuid=${getUUIDFromSessionID(sessionID)}`)}
         >
           Back to Mood Selection
-        </Button>
+        </Button>*/}
       </main>
     </div>
   );
