@@ -83,7 +83,7 @@ export default function Relationship() {
 
       <main className="w-full max-w-4xl px-4">
         <h1 className="text-3xl font-bold mb-6 text-center">
-          Select Your Close Friends
+        วันนี้คุยกับใครแล้วรู้สึกดี
         </h1>
 
         {/* Top Friends Section */}
