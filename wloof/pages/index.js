@@ -37,7 +37,6 @@ export default function Home({ liff, liffError, profile }) {
       <Head>
         <title>LIFF App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="flex flex-col items-center text-center space-y-6">
@@ -45,7 +44,6 @@ export default function Home({ liff, liffError, profile }) {
         <h1 className="text-4xl font-bold">Hi, {profile || "Guest"}</h1>
 
         {/* LIFF status */}
-        {liff.isInClient()}
         {liff && <p>LIFF init succeeded.</p>}
         {liffError && (
           <div>
