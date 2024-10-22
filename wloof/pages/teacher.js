@@ -22,7 +22,7 @@ const close = async (uuid) => {
     const liff = (await import('@line/liff')).default;
 
     // Construct the URI with the UUID as a query parameter
-    const uriWithUuid = `https://liff.line.me/2006477887-2orv54av?uuid=${uuid}`;
+    const uriWithUuid = `https://liff.line.me/2006477887-2orv54av/${uuid}`;
 
     // Send the message with the updated URI
     liff
