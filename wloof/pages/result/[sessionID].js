@@ -88,7 +88,7 @@ export default function ResultPage() {
 
       <main className="w-full max-w-4xl flex flex-col items-center text-center space-y-6">
         {/* Title */}
-        <h1 className="text-4xl font-bold">Mood Results for "{sessionID}"</h1>
+        <h1 className="text-4xl font-bold">Mood Results</h1>
 
         {/* Display Mood Entries */}
         {moodEntries.length > 0 ? (
