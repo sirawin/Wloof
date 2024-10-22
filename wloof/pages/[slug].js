@@ -121,7 +121,7 @@ export default function Home({ liff, liffError, profile, uid }) {
         {/* Display slug text */}
         {slug && <p className="text-xl">Text: {slug}</p>}
 
-        {/* LIFF status */}
+        {/* LIFF status test */}
         {uid}  
         {liff && <p>LIFF init succeeded.</p>}
         {liffError && (
