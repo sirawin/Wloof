@@ -49,25 +49,157 @@ export default function Home({ liff, liffError, profile, uid }) {
     }
   }, [router.isReady, router.query, uid]);
 
-  const moods = [
-    { emoji: "🤢", label: "Nauseous" },
-    { emoji: "😐", label: "Meh" },
-    { emoji: "🙂", label: "Okay" },
-    { emoji: "🥰", label: "Loved" },
-    { emoji: "😂", label: "Laughing" },
-    { emoji: "🥲", label: "Tears of Joy" },
-    { emoji: "😑", label: "Annoyed" },
-    { emoji: "🤯", label: "Mind Blown" },
-    { emoji: "😵‍💫", label: "Dizzy" },
-    { emoji: "😡", label: "Angry" },
-    { emoji: "😤", label: "Frustrated" },
-    { emoji: "😭", label: "Crying" },
-    { emoji: "😱", label: "Shocked" },
-    { emoji: "🤬", label: "Furious" },
-    { emoji: "😰", label: "Sweaty" },
-    { emoji: "😓", label: "Sad" },
-    { emoji: "😶‍🌫️", label: "Speechless" },
+  const moodsGrid = [
+    // Row 1 (High Energy, Low Pleasantness)
+    [
+      { label: "Enraged", color: "bg-red-500" },
+      { label: "Panicked", color: "bg-red-500" },
+      { label: "Stressed", color: "bg-red-500" },
+      { label: "Jittery", color: "bg-red-500" },
+      { label: "Shocked", color: "bg-red-500" }
+    ],
+    // Row 2
+    [
+      { label: "Livid", color: "bg-red-500" },
+      { label: "Furious", color: "bg-red-500" },
+      { label: "Frustrated", color: "bg-red-500" },
+      { label: "Tense", color: "bg-red-500" },
+      { label: "Stunned", color: "bg-red-500" }
+    ],
+    // Row 3
+    [
+      { label: "Fuming", color: "bg-red-500" },
+      { label: "Frightened", color: "bg-red-500" },
+      { label: "Angry", color: "bg-red-500" },
+      { label: "Nervous", color: "bg-red-500" },
+      { label: "Restless", color: "bg-red-500" }
+    ],
+    // Row 4
+    [
+      { label: "Anxious", color: "bg-red-500" },
+      { label: "Apprehensive", color: "bg-red-500" },
+      { label: "Worried", color: "bg-red-500" },
+      { label: "Irritated", color: "bg-red-500" },
+      { label: "Annoyed", color: "bg-red-500" }
+    ],
+    // Row 5
+    [
+      { label: "Repulsed", color: "bg-red-500" },
+      { label: "Troubled", color: "bg-red-500" },
+      { label: "Concerned", color: "bg-red-500" },
+      { label: "Uneasy", color: "bg-red-500" },
+      { label: "Peeved", color: "bg-red-500" }
+    ],
+    // Yellow Section (High Energy, High Pleasantness)
+    [
+      { label: "Surprised", color: "bg-yellow-400" },
+      { label: "Upbeat", color: "bg-yellow-400" },
+      { label: "Festive", color: "bg-yellow-400" },
+      { label: "Exhilarated", color: "bg-yellow-400" },
+      { label: "Ecstatic", color: "bg-yellow-400" }
+    ],
+    [
+      { label: "Hyper", color: "bg-yellow-400" },
+      { label: "Cheerful", color: "bg-yellow-400" },
+      { label: "Motivated", color: "bg-yellow-400" },
+      { label: "Inspired", color: "bg-yellow-400" },
+      { label: "Elated", color: "bg-yellow-400" }
+    ],
+    [
+      { label: "Energized", color: "bg-yellow-400" },
+      { label: "Lively", color: "bg-yellow-400" },
+      { label: "Excited", color: "bg-yellow-400" },
+      { label: "Optimistic", color: "bg-yellow-400" },
+      { label: "Enthusiastic", color: "bg-yellow-400" }
+    ],
+    [
+      { label: "Pleased", color: "bg-yellow-400" },
+      { label: "Focused", color: "bg-yellow-400" },
+      { label: "Happy", color: "bg-yellow-400" },
+      { label: "Proud", color: "bg-yellow-400" },
+      { label: "Thrilled", color: "bg-yellow-400" }
+    ],
+    [
+      { label: "Pleasant", color: "bg-yellow-400" },
+      { label: "Joyful", color: "bg-yellow-400" },
+      { label: "Hopeful", color: "bg-yellow-400" },
+      { label: "Playful", color: "bg-yellow-400" },
+      { label: "Blissful", color: "bg-yellow-400" }
+    ],
+    // Green Section (Low Energy, High Pleasantness)
+    [
+      { label: "At Ease", color: "bg-green-400" },
+      { label: "Easygoing", color: "bg-green-400" },
+      { label: "Content", color: "bg-green-400" },
+      { label: "Loving", color: "bg-green-400" },
+      { label: "Fulfilled", color: "bg-green-400" }
+    ],
+    [
+      { label: "Calm", color: "bg-green-400" },
+      { label: "Secure", color: "bg-green-400" },
+      { label: "Satisfied", color: "bg-green-400" },
+      { label: "Grateful", color: "bg-green-400" },
+      { label: "Touched", color: "bg-green-400" }
+    ],
+    [
+      { label: "Relaxed", color: "bg-green-400" },
+      { label: "Chill", color: "bg-green-400" },
+      { label: "Restful", color: "bg-green-400" },
+      { label: "Blessed", color: "bg-green-400" },
+      { label: "Balanced", color: "bg-green-400" }
+    ],
+    [
+      { label: "Mellow", color: "bg-green-400" },
+      { label: "Thoughtful", color: "bg-green-400" },
+      { label: "Peaceful", color: "bg-green-400" },
+      { label: "Comfortable", color: "bg-green-400" },
+      { label: "Carefree", color: "bg-green-400" }
+    ],
+    [
+      { label: "Sleepy", color: "bg-green-400" },
+      { label: "Complacent", color: "bg-green-400" },
+      { label: "Tranquil", color: "bg-green-400" },
+      { label: "Cozy", color: "bg-green-400" },
+      { label: "Serene", color: "bg-green-400" }
+    ],
+    // Blue Section (Low Energy, Low Pleasantness)
+    [
+      { label: "Disgusted", color: "bg-blue-400" },
+      { label: "Glum", color: "bg-blue-400" },
+      { label: "Disappointed", color: "bg-blue-400" },
+      { label: "Down", color: "bg-blue-400" },
+      { label: "Apathetic", color: "bg-blue-400" }
+    ],
+    [
+      { label: "Pessimistic", color: "bg-blue-400" },
+      { label: "Morose", color: "bg-blue-400" },
+      { label: "Discouraged", color: "bg-blue-400" },
+      { label: "Sad", color: "bg-blue-400" },
+      { label: "Bored", color: "bg-blue-400" }
+    ],
+    [
+      { label: "Alienated", color: "bg-blue-400" },
+      { label: "Miserable", color: "bg-blue-400" },
+      { label: "Lonely", color: "bg-blue-400" },
+      { label: "Disheartened", color: "bg-blue-400" },
+      { label: "Tired", color: "bg-blue-400" }
+    ],
+    [
+      { label: "Despondent", color: "bg-blue-400" },
+      { label: "Depressed", color: "bg-blue-400" },
+      { label: "Sullen", color: "bg-blue-400" },
+      { label: "Exhausted", color: "bg-blue-400" },
+      { label: "Fatigued", color: "bg-blue-400" }
+    ],
+    [
+      { label: "Despairing", color: "bg-blue-400" },
+      { label: "Hopeless", color: "bg-blue-400" },
+      { label: "Desolate", color: "bg-blue-400" },
+      { label: "Spent", color: "bg-blue-400" },
+      { label: "Drained", color: "bg-blue-400" }
+    ]
   ];
+  
 
   const handleMoodSelect = async (mood) => {
     if (!uid || !slug) {
@@ -109,53 +241,34 @@ export default function Home({ liff, liffError, profile, uid }) {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center text-foreground">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center text-gray-800">
       <Head>
-        <title>LIFF App</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mood Grid</title>
       </Head>
 
       <main className="flex flex-col items-center text-center space-y-6">
-        {/* Greeting */}
-        <h1 className="text-4xl font-bold">Hi, {profile || "Guest"}</h1>
+        <h1 className="text-4xl font-bold">How are you feeling?</h1>
 
-        {/* Display slug text */}
-        {slug && <p className="text-xl">Text: {slug}</p>}
-
-        {/* LIFF status */}
-        {liff && <p>LIFF init succeeded.</p>}
-        {liffError && (
-          <div>
-            <p>LIFF init failed.</p>
-            <p>
-              <code>{liffError}</code>
-            </p>
-          </div>
-        )}
-
-        {/* Subtitle */}
-        <p className="text-xl">How are you feeling today?</p>
-
-        {/* Mood Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
-          {moods.map((mood, index) => (
-            <Button
-              key={index}
-              variant={selectedMood?.emoji === mood.emoji ? "default" : "ghost"}
-              size="icon"
-              onClick={() => handleMoodSelect(mood)}
-              className={cn(
-                "text-4xl",
-                selectedMood?.emoji === mood.emoji && "ring-2 ring-ring"
-              )}
-              disabled={loading} // Disable buttons while loading
-            >
-              {mood.emoji}
-            </Button>
-          ))}
+        {/* Mood Grid UI */}
+        <div className="grid grid-cols-5 gap-2">
+          {moodsGrid.map((row, rowIndex) =>
+            row.map((mood, colIndex) => (
+              <Button
+                key={`${rowIndex}-${colIndex}`}
+                variant={selectedMood?.label === mood.label ? "default" : "ghost"}
+                onClick={() => handleMoodSelect(mood)}
+                className={`p-4 text-center border rounded-lg ${
+                  selectedMood?.label === mood.label
+                    ? "border-black ring-2 ring-black"
+                    : mood.color
+                }`}
+              >
+                {mood.label}
+              </Button>
+            ))
+          )}
         </div>
 
-        {/* Selected Mood */}
         {selectedMood && (
           <p className="mt-4 text-xl">
             You selected: <strong>{selectedMood.label}</strong>
@@ -170,15 +283,6 @@ export default function Home({ liff, liffError, profile, uid }) {
         {/* Error Message */}
         {error && <p className="text-red-500">{error}</p>}
 
-        {/* LIFF Documentation Link */}
-        <a
-          href="https://developers.line.biz/ja/docs/liff/"
-          target="_blank"
-          rel="noreferrer"
-          className="mt-4 text-primary underline"
-        >
-          LIFF Documentation
-        </a>
       </main>
     </div>
   );
