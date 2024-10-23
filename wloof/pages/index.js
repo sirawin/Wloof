@@ -48,7 +48,7 @@ export default function Home({ liff, liffError, profile, uid }) {
         mood: mood.label,
         timestamp: serverTimestamp(), // Adds server timestamp
       });
-  
+  //test
       // Optional: Provide feedback to the user, e.g., show a success message or reset the selected mood
     } catch (err) {
       console.error("Error writing to Realtime Database: ", err);
