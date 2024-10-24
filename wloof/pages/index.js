@@ -1,5 +1,5 @@
 "use client";
-
+import '../styles/globals.css'
 import Head from "next/head";
 import { useState } from "react";
 import { Button } from "@/components/ui/button"; // Adjust the import path
@@ -8,8 +8,8 @@ import { database } from '../lib/firebaseConfig'; // Adjust the path based on wh
 import { ref, push, set, serverTimestamp } from "firebase/database";
 import { useRouter } from 'next/router'
 
-export default function Home({ liff, liffError, profile, uid }) {
-  const [selectedMood, setSelectedMood] = useState(null);
+export default function Home() {
+ const [selectedMood, setSelectedMood] = useState(null);
   const router = useRouter()
   const moods = [
     { emoji: "🤢", label: "Nauseous" },
@@ -30,7 +30,7 @@ export default function Home({ liff, liffError, profile, uid }) {
     { emoji: "😓", label: "Sad" },
     { emoji: "😶‍🌫️", label: "Speechless" },
   ];
-
+/*
   const handleMoodSelect = async (mood) => {
     setSelectedMood(mood);
   
@@ -56,7 +56,7 @@ export default function Home({ liff, liffError, profile, uid }) {
 
     }
   };
-
+*/
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center text-foreground">
       <Head>
@@ -65,19 +65,7 @@ export default function Home({ liff, liffError, profile, uid }) {
       </Head>
 
       <main className="flex flex-col items-center text-center space-y-6">
-        {/* Greeting */}
-        <h1 className="text-4xl font-bold">Hi, {profile || "Guest"}</h1>
-        {router.query.slug}
-        {/* LIFF status */}
-        {liff && <p>LIFF init succeeded.</p>}
-        {liffError && (
-          <div>
-            <p>LIFF init failed.</p>
-            <p>
-              <code>{liffError}</code>
-            </p>
-          </div>
-        )}
+        
 
         {/* Subtitle */}
         <p className="text-xl">How are you feeling today?</p>
